@@ -1,8 +1,12 @@
-import React from "react";
-import { View } from "react-native/types";
+import React from 'react';
+import {Text, View} from 'react-native';
 
-const GameScreen = (props:any) => { 
-    return (<View></View>);
-}
+const GameScreen = () => {
+  return (
+    <View>
+      <Text>Game Screen</Text>
+    </View>
+  );
+};
 
 export default GameScreen;
