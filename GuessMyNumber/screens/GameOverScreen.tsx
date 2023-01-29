@@ -1,8 +1,8 @@
-import React from "react";
-import { View } from "react-native/types";
+import React from 'react';
+import {View} from 'react-native/types';
 
-const GameOverScreen = (props:any) => { 
-    return (<View></View>);
-}
+const GameOverScreen = () => {
+  return <View />;
+};
 
 export default GameOverScreen;

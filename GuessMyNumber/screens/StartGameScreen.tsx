@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 
-const StartGameScreen = (props: any) => {
+const StartGameScreen = () => {
   return (
     <View style={style.textInputContainer}>
       <TextInput
