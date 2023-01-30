@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native/types';
+import {View} from 'react-native';
 
 const GameOverScreen = () => {
   return <View />;

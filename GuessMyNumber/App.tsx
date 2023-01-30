@@ -1,8 +1,9 @@
 import React, {SetStateAction, useState} from 'react';
-import {StyleSheet, ImageBackground} from 'react-native';
+import {StyleSheet, ImageBackground, SafeAreaView} from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import GameScreen from './screens/GameScreen';
+import Colours from './constants/colours';
 
 export default function App(): JSX.Element {
   const [userNumber, setuserNumber] = useState(null);
@@ -16,13 +17,15 @@ export default function App(): JSX.Element {
     screen = <GameScreen />;
   }
   return (
-    <LinearGradient colors={['#72063c', '#ddb52f']} style={styles.rootScreen}>
+    <LinearGradient
+      colors={[Colours.primary500, Colours.secondary500]}
+      style={styles.rootScreen}>
       <ImageBackground
         style={styles.rootScreen}
         resizeMode="cover"
         source={require('./assets/images/background.png')}
         imageStyle={styles.backgroundImage}>
-        {screen}
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );
