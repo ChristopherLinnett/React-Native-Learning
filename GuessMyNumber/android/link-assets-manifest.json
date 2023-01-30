@@ -2,12 +2,20 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/COMIC.TTF",
+      "sha1": "66f4b14c32b6a79f6d68c0f7634686b82b1aea95"
+    },
+    {
       "path": "assets/fonts/OpenSans-Bold.ttf",
       "sha1": "1a34cf1b20796fbda7b3fb6ae37d84fd406e47b8"
     },
     {
       "path": "assets/fonts/OpenSans-Regular.ttf",
       "sha1": "e9fa37c3ae9696f34b8ace5c5a425f9dd8bd6612"
+    },
+    {
+      "path": "assets/fonts/WinterSong.ttf",
+      "sha1": "5d7e10059000cbf0369f3874702e28573c602632"
     }
   ]
 }
