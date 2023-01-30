@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/OpenSans-Bold.ttf",
+      "sha1": "1a34cf1b20796fbda7b3fb6ae37d84fd406e47b8"
+    },
+    {
+      "path": "assets/fonts/OpenSans-Regular.ttf",
+      "sha1": "e9fa37c3ae9696f34b8ace5c5a425f9dd8bd6612"
+    }
+  ]
+}
