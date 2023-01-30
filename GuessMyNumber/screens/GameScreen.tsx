@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import NumberContainer from '../components/game/numbercontainer';
+import DescriptionText from '../components/UI/DescriptionText';
 import PrimaryButton from '../components/UI/PrimaryButton';
 import Title from '../components/UI/title';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const generateRndNum: any = (min: number, max: number, exclude: number) => {
   const num = Math.floor(Math.random() * (max - min)) + min;
@@ -56,16 +58,23 @@ const GameScreen = ({
   };
   return (
     <View style={styles.screen}>
-      <Title>Opponents Guess</Title>
+      <View style={styles.topMargin}>
+        <Title>Opponents Guess</Title>
+      </View>
       <NumberContainer>{currentGuess.toString()}</NumberContainer>
-      <View>
+      <View style={styles.centeredContent}>
+        <DescriptionText>Higher Or Lower</DescriptionText>
         <View style={styles.buttonRow}>
-          <PrimaryButton onPressed={nextGuessHandler.bind(this, 'lower')}>
-            Lower -
-          </PrimaryButton>
-          <PrimaryButton onPressed={nextGuessHandler.bind(this, 'higher')}>
-            Higher +
-          </PrimaryButton>
+          <View style={styles.growButton}>
+            <PrimaryButton onPressed={nextGuessHandler.bind(this, 'lower')}>
+              <Icon name="remove" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <View style={styles.growButton}>
+            <PrimaryButton onPressed={nextGuessHandler.bind(this, 'higher')}>
+              <Icon name="add" size={24} />
+            </PrimaryButton>
+          </View>
         </View>
       </View>
     </View>
@@ -79,7 +88,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
   },
+  topMargin: {marginTop: 80},
   buttonRow: {
+    paddingTop: 24,
     flexDirection: 'row',
+  },
+  centeredContent: {
+    flex: 1,
+    alignItems: 'center',
+    alignContent: 'stretch',
+  },
+  growButton: {
+    flex: 1,
   },
 });

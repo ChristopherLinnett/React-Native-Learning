@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 28,
     margin: 4,
+    backgroundColor: Colours.primary800,
   },
   buttonInnerContainer: {
-    backgroundColor: Colours.primary800,
     paddingVertical: 8,
     paddingHorizontal: 16,
     elevation: 4,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
 export default PrimaryButton;
 
 interface PrimaryButtonProps {
-  children?: string;
+  children?: string | JSX.Element;
   onPressed: Function;
 }
