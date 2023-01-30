@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import Colours from '../constants/colours';
+import Colours from '../../constants/colours';
 
 const Title = ({children}: TitleProps) => {
   return <Text style={styles.title}>{children}</Text>;

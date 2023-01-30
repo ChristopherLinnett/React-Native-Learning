@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
-import Title from '../components/title';
+import PrimaryButton from '../components/UI/PrimaryButton';
+import Title from '../components/UI/title';
 
-const GameScreen = () => {
+const GameScreen = ({targetNum}: {targetNum: number}) => {
+  const generateRndNum: any = (
+    min: number,
+    max: number,
+    exclude: number[] = [],
+  ) => {
+    const num = Math.floor(Math.random() * (max - min)) + min;
+    if (exclude.includes(num)) {
+      return generateRndNum(min, max, [...exclude]);
+    }
+    return num;
+  };
+  const initialGuess: number = generateRndNum(1, 100, [targetNum]);
+  const [currentGuess, setCurrentGuess] = useState();
+
   return (
     <View style={styles.screen}>
       <Title>Opponents Guess</Title>

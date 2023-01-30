@@ -14,7 +14,7 @@ export default function App(): JSX.Element {
   let screen = <StartGameScreen onPickNumber={userNumberIsSet} />;
 
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = <GameScreen targetNum={userNumber} />;
   }
   return (
     <LinearGradient
