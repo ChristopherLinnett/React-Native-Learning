@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import NumberContainer from '../components/game/numbercontainer';
 import PrimaryButton from '../components/UI/PrimaryButton';
@@ -15,9 +15,24 @@ const generateRndNum: any = (min: number, max: number, exclude: number) => {
 let minBound: number = 1;
 let maxBound: number = 99;
 
-const GameScreen = ({targetNum}: {targetNum: number}) => {
+const GameScreen = ({
+  targetNum,
+  gameOverHandler,
+}: {
+  targetNum: number;
+  gameOverHandler: Function;
+}) => {
   const initialGuess: number = generateRndNum(1, 100, targetNum);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+  useEffect(() => {
+    if (currentGuess === targetNum) {
+      Alert.alert('They Match', `The computer found the number ${targetNum}`, [
+        {text: 'ok', style: 'destructive', onPress: _ => gameOverHandler()},
+      ]);
+      return;
+    }
+  }, [currentGuess, targetNum, gameOverHandler]);
 
   const nextGuessHandler = (direction: string) => {
     if (
