@@ -9,6 +9,7 @@ import GameOverScreen from './screens/GameOverScreen';
 export default function App(): JSX.Element {
   const [userNumber, setuserNumber] = useState(null);
   const [gameIsOver, setGameIsOver] = useState(true);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   const userNumberIsSet = (pickedNumber: SetStateAction<null>) => {
     setuserNumber(pickedNumber);
@@ -17,6 +18,11 @@ export default function App(): JSX.Element {
 
   const gameOverHandler = () => {
     setGameIsOver(true);
+  };
+
+  const startNewGameHandler = () => {
+    setuserNumber(null);
+    setGuessRounds(0);
   };
 
   let screen = <StartGameScreen onPickNumber={userNumberIsSet} />;
@@ -28,7 +34,13 @@ export default function App(): JSX.Element {
   }
 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        rounds={0}
+        userNumber={userNumber}
+        onStartNewGame={startNewGameHandler}
+      />
+    );
   }
   return (
     <LinearGradient
