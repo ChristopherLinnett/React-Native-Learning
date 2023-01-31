@@ -16,13 +16,14 @@ export default function App(): JSX.Element {
     setGameIsOver(false);
   };
 
-  const gameOverHandler = () => {
+  const gameOverHandler = (rounds: number) => {
+    setGuessRounds(rounds);
     setGameIsOver(true);
   };
 
   const startNewGameHandler = () => {
     setuserNumber(null);
-    setGuessRounds(0);
+    setGuessRounds(guessRounds);
   };
 
   let screen = <StartGameScreen onPickNumber={userNumberIsSet} />;
@@ -36,7 +37,7 @@ export default function App(): JSX.Element {
   if (gameIsOver && userNumber) {
     screen = (
       <GameOverScreen
-        rounds={0}
+        rounds={guessRounds}
         userNumber={userNumber}
         onStartNewGame={startNewGameHandler}
       />

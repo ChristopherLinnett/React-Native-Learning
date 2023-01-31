@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View, FlatList} from 'react-native';
 import NumberContainer from '../components/game/numbercontainer';
 import DescriptionText from '../components/UI/DescriptionText';
 import PrimaryButton from '../components/UI/PrimaryButton';
 import Title from '../components/UI/title';
 import Icon from 'react-native-vector-icons/Ionicons';
+import GuessLogItem from '../components/game/GuessLogItem';
 
 const generateRndNum: any = (min: number, max: number, exclude: number) => {
   const num = Math.floor(Math.random() * (max - min)) + min;
@@ -26,15 +27,20 @@ const GameScreen = ({
 }) => {
   const initialGuess: number = generateRndNum(1, 100, targetNum);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessRounds, setGuessRounds] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === targetNum) {
       Alert.alert('They Match', `The computer found the number ${targetNum}`, [
-        {text: 'ok', style: 'destructive', onPress: _ => gameOverHandler()},
+        {
+          text: 'ok',
+          style: 'destructive',
+          onPress: _ => gameOverHandler(guessRounds.length),
+        },
       ]);
       return;
     }
-  }, [currentGuess, targetNum, gameOverHandler]);
+  }, [currentGuess, targetNum, gameOverHandler, guessRounds]);
 
   useEffect(() => {
     [minBound, maxBound] = [1, 99];
@@ -52,14 +58,15 @@ const GameScreen = ({
     }
 
     if (direction === 'lower') {
-      maxBound = currentGuess;
+      maxBound = currentGuess - 1;
     } else {
-      minBound = currentGuess;
+      minBound = currentGuess + 1;
     }
     const newRndNum = generateRndNum(minBound, maxBound, currentGuess);
-    console.log(minBound, maxBound);
+    setGuessRounds(currentGuessRounds => [...currentGuessRounds, newRndNum]);
     setCurrentGuess(newRndNum);
   };
+  const guessRoundsListLength = guessRounds.length;
   return (
     <View style={styles.screen}>
       <View style={styles.topMargin}>
@@ -81,6 +88,18 @@ const GameScreen = ({
           </View>
         </View>
       </View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guessRounds.reverse()}
+          renderItem={itemData => (
+            <GuessLogItem
+              roundNumber={guessRoundsListLength - itemData.index}
+              guess={itemData.item}
+            />
+          )}
+          keyExtractor={(item, _) => item.toString()}
+        />
+      </View>
     </View>
   );
 };
@@ -94,6 +113,7 @@ const styles = StyleSheet.create({
   },
   topMargin: {marginTop: 80},
   buttonRow: {
+    flex: 1,
     paddingTop: 24,
     flexDirection: 'row',
   },
@@ -104,5 +124,10 @@ const styles = StyleSheet.create({
   },
   growButton: {
     flex: 1,
+  },
+  listContainer: {
+    flex: 3,
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
 });
