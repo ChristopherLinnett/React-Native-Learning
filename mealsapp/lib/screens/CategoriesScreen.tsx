@@ -1,8 +1,29 @@
 import React from 'react';
-import {View} from 'react-native/types';
+import {FlatList, StyleSheet, View} from 'react-native';
+import CategoryGridTile from '../components/CategoryGridTile';
+import {CATEGORIES} from '../data/DummyData';
 
 const CategoriesScreen = () => {
-  return <View />;
+  return (
+    <View style={styles.root}>
+      <FlatList
+        numColumns={2}
+        data={CATEGORIES}
+        keyExtractor={(item, _) => item.id}
+        renderItem={renderedItem => (
+          <CategoryGridTile
+            title={renderedItem.item.title}
+            colour={renderedItem.item.colour}
+          />
+        )}
+      />
+    </View>
+  );
 };
 
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
 export default CategoriesScreen;

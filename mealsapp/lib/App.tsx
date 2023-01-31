@@ -6,10 +6,18 @@
  */
 
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
+import CategoriesScreen from './screens/CategoriesScreen';
 
 function App(): JSX.Element {
-  return <View style={styles.root} />;
+  return (
+    <>
+      <StatusBar barStyle={'light-content'} />
+      <SafeAreaView style={styles.root}>
+        <CategoriesScreen />
+      </SafeAreaView>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
