@@ -1,10 +1,15 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View, Platform} from 'react-native';
 
 const CategoryGridTile = ({title, colour}: CategoryGridTileProps) => {
+  const navigation: NavigationProp = useNavigation();
   return (
     <View style={[styles.gridItem]}>
       <Pressable
+        onPress={() => {
+          navigation.navigate('MealsOverview');
+        }}
         android_ripple={{color: 'black'}}
         style={({pressed}) => [
           {backgroundColor: colour},
@@ -27,10 +32,7 @@ const styles = StyleSheet.create({
 
     flex: 1,
     elevation: 4,
-    shadowColor: 'white',
-    shadowOffset: {width: 4, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
+
     overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
   },
   buttonContainer: {
@@ -38,6 +40,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
+    shadowColor: 'black',
+    shadowOffset: {width: 4, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
   },
   title: {
     fontWeight: 'bold',
@@ -45,6 +51,7 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: Platform.OS === 'ios' ? 0.5 : 1,
+    shadowOpacity: 0,
   },
 });
 
