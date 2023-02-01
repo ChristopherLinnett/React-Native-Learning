@@ -1,9 +1,10 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useLayoutEffect} from 'react';
-import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import MealDetails from '../components/MealDetails';
 import {MEALS} from '../data/DummyData';
 import List from '../components/List';
+import Icon from '../components/Icon';
 
 const MealDetailScreen = () => {
   const navigation = useNavigation();
@@ -11,19 +12,25 @@ const MealDetailScreen = () => {
   const mealID = route.params?.mealID;
   const meal = MEALS.find(passedMeal => passedMeal.id === mealID);
 
+  const heartPressHandler = () => {
+    console.log('pressed');
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => {
-        return <Button title="click me" onPress={() => {}} />;
-      },
+      headerRight: () =>
+        Icon({
+          icon: 'fa-solid fa-heart',
+          colour: 'white',
+          size: 18,
+          onPress: heartPressHandler,
+        }),
+      title: meal?.title,
     });
-  });
+  }, [navigation]);
   return (
     <View style={styles.root}>
       <Image style={styles.image} source={{uri: meal?.imageUrl}} />
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{meal?.title}</Text>
-      </View>
       <MealDetails textStyle={styles.textStyle} mealItem={meal} />
       <ScrollView>
         <View style={styles.maxWidth}>
@@ -51,23 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
   },
-  titleContainer: {
-    padding: '2%',
-    width: '100%',
-    height: '6%',
-    backgroundColor: 'black',
-    marginTop: '-11%',
-    opacity: 0.5,
-  },
-  title: {
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: '100%',
-    marginTop: 0,
-    fontSize: 24,
-    color: 'white',
-  },
+
   image: {
     width: '100%',
     height: '30%',

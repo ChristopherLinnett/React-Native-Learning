@@ -5,10 +5,8 @@ type ListItemProps = {data: string[]};
 
 const List = ({data}: ListItemProps) => {
   const list = data?.map(dataPoint => (
-    <View style={styles.container}>
-      <Text key={dataPoint} style={styles.textStyle}>
-        {dataPoint}
-      </Text>
+    <View key={dataPoint} style={styles.container}>
+      <Text style={styles.textStyle}>{dataPoint}</Text>
     </View>
   ));
 
