@@ -12,7 +12,9 @@ import {faHeart} from '@fortawesome/free-regular-svg-icons/faHeart';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import FavouritesScreen from './screens/FavouritesScreen';
 import Icon from './components/Icon';
-import {faList} from '@fortawesome/free-solid-svg-icons';
+import {faList} from '@fortawesome/free-solid-svg-icons/faList';
+import {Provider} from 'react-redux';
+import {store} from './store/store';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -69,23 +71,28 @@ function App(): JSX.Element {
   return (
     <>
       <StatusBar barStyle={'light-content'} />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {backgroundColor: '#8F91A2'},
-            headerShadowVisible: true,
-            headerTintColor: 'white',
-            contentStyle: {backgroundColor: '#94B0DA'},
-          }}>
-          <Stack.Screen
-            name="MealCategories"
-            component={DrawerNavigator}
-            options={{title: 'Categories', headerShown: false}}
-          />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
-          <Stack.Screen name="MealDetail" component={MealDetailScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {backgroundColor: '#8F91A2'},
+              headerShadowVisible: true,
+              headerTintColor: 'white',
+              contentStyle: {backgroundColor: '#94B0DA'},
+            }}>
+            <Stack.Screen
+              name="MealCategories"
+              component={DrawerNavigator}
+              options={{title: 'Categories', headerShown: false}}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+            />
+            <Stack.Screen name="MealDetail" component={MealDetailScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </>
   );
 }

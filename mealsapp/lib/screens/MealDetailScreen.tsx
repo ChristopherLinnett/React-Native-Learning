@@ -5,6 +5,8 @@ import MealDetails from '../components/MealDetails';
 import {MEALS} from '../data/DummyData';
 import List from '../components/List';
 import Icon from '../components/Icon';
+import {useDispatch, useSelector} from 'react-redux';
+import {addFavourite, removeFavourite} from '../store/favourites';
 
 const MealDetailScreen = () => {
   const navigation = useNavigation();
@@ -12,22 +14,31 @@ const MealDetailScreen = () => {
   const mealID = route.params?.mealID;
   const meal = MEALS.find(passedMeal => passedMeal.id === mealID);
 
-  const heartPressHandler = () => {
-    console.log('pressed');
-  };
+  const favouriteMealIds = useSelector(
+    (state: any) => state.favouriteMeals.ids,
+  );
+  const dispatch = useDispatch();
+  const mealIsFavourite = favouriteMealIds.includes(mealID);
 
   useLayoutEffect(() => {
+    const changeFavouriteStatus = () => {
+      if (mealIsFavourite) {
+        dispatch(removeFavourite({id: mealID}));
+      } else {
+        dispatch(addFavourite({id: mealID}));
+      }
+    };
     navigation.setOptions({
       headerRight: () =>
         Icon({
-          icon: 'fa-solid fa-heart',
+          icon: mealIsFavourite ? 'fa-solid fa-heart' : 'fa-regular fa-heart',
           colour: 'white',
           size: 24,
-          onPress: heartPressHandler,
+          onPress: changeFavouriteStatus,
         }),
       title: meal?.title,
     });
-  }, [meal?.title, navigation]);
+  }, [meal?.title, navigation, mealIsFavourite, dispatch, mealID]);
   return (
     <View style={styles.root}>
       <Image style={styles.image} source={{uri: meal?.imageUrl}} />
