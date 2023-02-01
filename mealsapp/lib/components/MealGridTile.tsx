@@ -1,26 +1,29 @@
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
 import React from 'react';
 import {Image, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import {MEALS} from '../data/DummyData';
+import MealDetails from './MealDetails';
 
 const MealGridTile = ({mealID}: {mealID: string}) => {
   const mealItem = MEALS.find(meal => meal.id === mealID);
-
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   return (
     <View style={styles.mealItem}>
       <Pressable
+        onPress={() => {
+          navigation.navigate('MealDetail', {mealID: mealID});
+        }}
         android_ripple={{color: 'black'}}
         style={({pressed}) => [pressed ? styles.pressed : null]}>
         <View style={[styles.innerMealContainer]}>
           <Image style={styles.image} source={{uri: mealItem?.imageUrl}} />
           <Text style={styles.title}>{mealItem?.title}</Text>
         </View>
-        <View style={styles.descriptiveRow}>
-          <Text style={styles.descriptiveText}>{mealItem?.duration}min</Text>
-          <Text style={styles.descriptiveText}>
-            {mealItem?.complexity.toUpperCase()}
-          </Text>
-          <Text style={styles.descriptiveText}>{mealItem?.affordability}</Text>
-        </View>
+        <MealDetails mealItem={mealItem} />
       </Pressable>
     </View>
   );
@@ -45,13 +48,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
   },
-  descriptiveRow: {
-    marginHorizontal: 16,
-    paddingBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+
   mealItem: {
     margin: 10,
     borderRadius: 20,
@@ -63,9 +60,7 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
   innerMealContainer: {borderRadius: 20, overflow: 'hidden'},
-  descriptiveText: {
-    fontSize: 12,
-  },
+
   pressed: {
     opacity: Platform.OS === 'ios' ? 0.5 : 1,
     shadowOpacity: 0,
