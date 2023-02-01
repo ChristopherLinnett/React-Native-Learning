@@ -1,22 +1,29 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import MealGridTile from '../components/MealGridTile';
+import {MEALS} from '../data/DummyData';
 
 const FavouritesScreen = () => {
+  const favouriteMealIds = useSelector(
+    (state: any) => state.favouriteMeals.ids,
+  );
+  const displayedMeals = MEALS.filter(meal =>
+    favouriteMealIds.includes(meal.id),
+  );
   return (
-    <View style={styles.root}>
-      <Text style={styles.textCenter}>This is the Favourites Screen</Text>
-    </View>
+    <FlatList
+      style={styles.root}
+      data={displayedMeals}
+      keyExtractor={(item, _) => item.id}
+      renderItem={item => <MealGridTile mealID={item.item.id} />}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  root: {
-    width: '100%',
-    height: '100%',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  textCenter: {textAlign: 'center'},
+  root: {flex: 1, marginBottom: 30},
 });
 
 export default FavouritesScreen;

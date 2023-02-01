@@ -17,8 +17,8 @@ const MealDetailScreen = () => {
   const favouriteMealIds = useSelector(
     (state: any) => state.favouriteMeals.ids,
   );
-  const dispatch = useDispatch();
   const mealIsFavourite = favouriteMealIds.includes(mealID);
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     const changeFavouriteStatus = () => {
