@@ -1,9 +1,13 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View, Platform} from 'react-native';
 
 const CategoryGridTile = ({id, title, colour}: CategoryGridTileProps) => {
-  const navigation: NavigationProp = useNavigation();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   return (
     <View style={[styles.gridItem]}>
       <Pressable

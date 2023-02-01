@@ -1,4 +1,9 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  ParamListBase,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React, {useLayoutEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import MealGridTile from '../components/MealGridTile';
@@ -6,7 +11,7 @@ import {CATEGORIES, MEALS} from '../data/DummyData';
 
 const MealsOverviewScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const route: RouteProp<ParamListBase> = useRoute();
   const categoryID: string = route.params?.categoryID;
   const displayedMeals = MEALS.filter(meal =>
     meal.categoryIds.includes(categoryID),
