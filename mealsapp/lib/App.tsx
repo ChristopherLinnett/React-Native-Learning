@@ -10,22 +10,25 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {faHeart as faHeartRegular} from '@fortawesome/free-solid-svg-icons/faHeart';
 import {faHeart} from '@fortawesome/free-regular-svg-icons/faHeart';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import FavouritesScreen from './screens/FavouritesScreen';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen
-        name="Categories"
-        component={CategoriesScreen}
-        options={{
-          headerStyle: {backgroundColor: '#8F91A2'},
-          headerShadowVisible: true,
-          headerTintColor: 'white',
-          sceneContainerStyle: {backgroundColor: '#94B0DA'},
-        }}
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: {backgroundColor: '#8F91A2'},
+        headerShadowVisible: true,
+        headerTintColor: 'white',
+        sceneContainerStyle: {backgroundColor: '#94B0DA'},
+      }}>
+      <Drawer.Screen name="Meal Categories" component={CategoriesScreen} />
+      <Stack.Screen
+        name="Favourites"
+        component={FavouritesScreen}
+        options={{title: 'Your Favourited Meals'}}
       />
     </Drawer.Navigator>
   );
