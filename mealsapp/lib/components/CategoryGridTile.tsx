@@ -14,7 +14,7 @@ const CategoryGridTile = ({id, title, colour}: CategoryGridTileProps) => {
         onPress={() => {
           navigation.navigate('MealsOverview', {categoryID: id});
         }}
-        android_ripple={{color: '#000000'}}
+        android_ripple={{color: 'grey'}}
         style={({pressed}) => [
           {backgroundColor: colour},
           styles.buttonContainer,

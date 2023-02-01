@@ -17,7 +17,7 @@ const MealGridTile = ({mealID}: {mealID: string}) => {
         onPress={() => {
           navigation.navigate('MealDetail', {mealID: mealID});
         }}
-        android_ripple={{color: 'black'}}
+        android_ripple={{color: 'grey'}}
         style={({pressed}) => [pressed && styles.pressed]}>
         <View style={[styles.innerMealContainer]}>
           <Image style={styles.image} source={{uri: mealItem?.imageUrl}} />
