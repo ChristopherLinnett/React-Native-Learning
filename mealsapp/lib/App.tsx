@@ -15,10 +15,10 @@ function App(): JSX.Element {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: {backgroundColor: '#18046F'},
+            headerStyle: {backgroundColor: '#8F91A2'},
             headerShadowVisible: true,
             headerTintColor: 'white',
-            contentStyle: {backgroundColor: '#12044F'},
+            contentStyle: {backgroundColor: '#94B0DA'},
           }}>
           <Stack.Screen
             name="MealCategories"
