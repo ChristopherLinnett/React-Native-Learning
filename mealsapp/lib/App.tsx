@@ -11,6 +11,8 @@ import {faHeart as faHeartRegular} from '@fortawesome/free-solid-svg-icons/faHea
 import {faHeart} from '@fortawesome/free-regular-svg-icons/faHeart';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import FavouritesScreen from './screens/FavouritesScreen';
+import Icon from './components/Icon';
+import {faList} from '@fortawesome/free-solid-svg-icons';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -23,12 +25,37 @@ const DrawerNavigator = () => {
         headerShadowVisible: true,
         headerTintColor: 'white',
         sceneContainerStyle: {backgroundColor: '#94B0DA'},
+        drawerActiveBackgroundColor: '#8F91A2',
+        drawerContentStyle: {backgroundColor: '#94B0DA'},
+        drawerActiveTintColor: 'white',
       }}>
-      <Drawer.Screen name="Meal Categories" component={CategoriesScreen} />
-      <Stack.Screen
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: 'Meal Categories',
+          drawerIcon: ({color, size}: {color: string; size: number}) =>
+            Icon({
+              icon: 'fa-solid fa-list',
+              colour: color,
+              size: size,
+              onPress: () => {},
+            }),
+        }}
+      />
+      <Drawer.Screen
         name="Favourites"
         component={FavouritesScreen}
-        options={{title: 'Your Favourited Meals'}}
+        options={{
+          title: 'Your Favourited Meals',
+          drawerIcon: ({color, size}: {color: string; size: number}) =>
+            Icon({
+              icon: 'fa-solid fa-heart',
+              colour: color,
+              size: size,
+              onPress: () => {},
+            }),
+        }}
       />
     </Drawer.Navigator>
   );
@@ -37,6 +64,7 @@ const DrawerNavigator = () => {
 function App(): JSX.Element {
   library.add(faHeart);
   library.add(faHeartRegular);
+  library.add(faList);
 
   return (
     <>
