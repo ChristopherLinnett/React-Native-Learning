@@ -12,8 +12,18 @@ function App(): JSX.Element {
     <>
       <StatusBar barStyle={'light-content'} />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="MealCategories" component={CategoriesScreen} />
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {backgroundColor: '#18046F'},
+            headerShadowVisible: true,
+            headerTintColor: 'white',
+            contentStyle: {backgroundColor: '#12044F'},
+          }}>
+          <Stack.Screen
+            name="MealCategories"
+            component={CategoriesScreen}
+            options={{title: 'Categories'}}
+          />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
         </Stack.Navigator>
       </NavigationContainer>

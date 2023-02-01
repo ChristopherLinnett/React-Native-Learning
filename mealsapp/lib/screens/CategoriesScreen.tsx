@@ -12,6 +12,7 @@ const CategoriesScreen = () => {
         keyExtractor={(item, _) => item.id}
         renderItem={renderedItem => (
           <CategoryGridTile
+            id={renderedItem.item.id}
             title={renderedItem.item.title}
             colour={renderedItem.item.colour}
           />
