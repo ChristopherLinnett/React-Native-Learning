@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   mealItem: {
     margin: 10,
     borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#DCEDFF',
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 3},
     shadowOpacity: 0.5,

@@ -1,14 +1,23 @@
-import {useRoute} from '@react-navigation/native';
-import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import React, {useLayoutEffect} from 'react';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import MealDetails from '../components/MealDetails';
 import {MEALS} from '../data/DummyData';
 import List from '../components/List';
 
 const MealDetailScreen = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const mealID = route.params?.mealID;
   const meal = MEALS.find(passedMeal => passedMeal.id === mealID);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return <Button title="click me" onPress={() => {}} />;
+      },
+    });
+  });
   return (
     <View style={styles.root}>
       <Image style={styles.image} source={{uri: meal?.imageUrl}} />
