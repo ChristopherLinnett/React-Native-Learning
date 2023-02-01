@@ -5,7 +5,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import React, {useLayoutEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import MealGridTile from '../components/MealGridTile';
 import {CATEGORIES, MEALS} from '../data/DummyData';
 
@@ -23,14 +23,15 @@ const MealsOverviewScreen = () => {
     navigation.setOptions({title: categoryTitle});
   });
   return (
-    <View>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item, _) => item.id}
-        renderItem={item => <MealGridTile mealID={item.item.id} />}
-      />
-    </View>
+    <FlatList
+      style={styles.root}
+      data={displayedMeals}
+      keyExtractor={(item, _) => item.id}
+      renderItem={item => <MealGridTile mealID={item.item.id} />}
+    />
   );
 };
-
+const styles = StyleSheet.create({
+  root: {flex: 1, marginBottom: 30},
+});
 export default MealsOverviewScreen;

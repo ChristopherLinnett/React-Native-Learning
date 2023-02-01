@@ -22,12 +22,12 @@ const MealDetailScreen = () => {
         Icon({
           icon: 'fa-solid fa-heart',
           colour: 'white',
-          size: 18,
+          size: 24,
           onPress: heartPressHandler,
         }),
       title: meal?.title,
     });
-  }, [navigation]);
+  }, [meal?.title, navigation]);
   return (
     <View style={styles.root}>
       <Image style={styles.image} source={{uri: meal?.imageUrl}} />

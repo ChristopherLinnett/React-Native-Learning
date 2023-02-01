@@ -21,9 +21,11 @@ const MealGridTile = ({mealID}: {mealID: string}) => {
         style={({pressed}) => [pressed && styles.pressed]}>
         <View style={[styles.innerMealContainer]}>
           <Image style={styles.image} source={{uri: mealItem?.imageUrl}} />
-          <Text style={styles.title}>{mealItem?.title}</Text>
+          <View style={styles.background}>
+            <Text style={styles.title}>{mealItem?.title}</Text>
+            <MealDetails mealItem={mealItem} />
+          </View>
         </View>
-        <MealDetails mealItem={mealItem} />
       </Pressable>
     </View>
   );
@@ -35,9 +37,6 @@ const styles = StyleSheet.create({
     padding: 6,
     elevation: 4,
   },
-  buttonContainer: {
-    flex: 1,
-  },
   image: {
     width: '100%',
     height: 200,
@@ -47,20 +46,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 24,
+    backgroundColor: 'white',
   },
 
   mealItem: {
-    margin: 10,
-    borderRadius: 20,
-    backgroundColor: '#DCEDFF',
+    margin: 20,
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 3},
     shadowOpacity: 0.5,
     shadowRadius: 7,
     overflow: 'visible',
   },
-  innerMealContainer: {borderRadius: 20, overflow: 'hidden'},
-
+  innerMealContainer: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    borderTopLeftRadius: 150,
+    borderTopRightRadius: 150,
+    overflow: 'hidden',
+  },
+  background: {
+    backgroundColor: 'white',
+  },
   pressed: {
     opacity: Platform.OS === 'ios' ? 0.5 : 1,
     shadowOpacity: 0,

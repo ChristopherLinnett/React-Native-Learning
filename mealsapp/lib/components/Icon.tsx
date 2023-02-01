@@ -11,7 +11,7 @@ type IconProps = {
 const Icon = ({icon, colour = 'white', size = 10, onPress}: IconProps) => {
   return (
     <Pressable
-      style={styles.button}
+      style={({pressed}) => [styles.button, pressed ? styles.pressed : null]}
       onPress={() => {
         onPress();
       }}>
@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
   button: {
     width: 20,
     height: 20,
+  },
+  pressed: {
+    opacity: 0.5,
   },
 });
 
