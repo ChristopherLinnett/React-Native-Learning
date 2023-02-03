@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StatusBar} from 'react-native';
 import colours from './constants/colours';
+import {Icons} from './constants/Icons';
 import {GlobalTheme} from './constants/theme';
 import AllExpenses from './pages/AllExpenses';
 import EditExpense from './pages/EditExpense';
@@ -24,13 +25,22 @@ const BottomTabsComponent = () => {
       }}>
       <BottomTabs.Screen
         name="RecentExpenses"
+        component={RecentExpenses}
         options={{
           title: 'Recent Expenses',
           tabBarLabel: 'Recent',
+          tabBarIcon: ({color, size}) => Icons.hourglass(color, size),
         }}
-        component={RecentExpenses}
       />
-      <BottomTabs.Screen name="AllExpenses" component={AllExpenses} />
+      <BottomTabs.Screen
+        name="AllExpenses"
+        component={AllExpenses}
+        options={{
+          title: 'All Expenses',
+          tabBarLabel: 'All',
+          tabBarIcon: ({color, size}) => Icons.calendar(color, size),
+        }}
+      />
     </BottomTabs.Navigator>
   );
 };
