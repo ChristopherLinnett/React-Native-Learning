@@ -1,8 +1,13 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {View} from 'react-native';
 
 function App(): JSX.Element {
-  return <StatusBar />;
+  return (
+    <NavigationContainer>
+      <View />
+    </NavigationContainer>
+  );
 }
 
 export default App;
