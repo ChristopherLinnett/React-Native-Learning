@@ -2,7 +2,7 @@ import colours from './colours';
 
 export const GlobalTheme = {
   colors: {
-    primary50: colours.honey_dew,
+    primary50: colours.pastelPink,
     primary100: colours.chestnut_rose,
     primary200: colours.thunderbird,
     primary400: colours.chili_pepper,

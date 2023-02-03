@@ -1,5 +1,6 @@
 import React from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {GlobalTheme} from '../../constants/theme';
 import Expense from '../../models/expense';
 import SummaryBar from '../SummaryBar';
 import ExpenseList from './ExpenseList';
@@ -10,11 +11,21 @@ type ExpenseOutputProps = {
 };
 const ExpensesOutput = ({expenses, timePeriod}: ExpenseOutputProps) => {
   return (
-    <View>
+    <View style={styles.container}>
       <SummaryBar timePeriod={timePeriod} expenses={expenses} />
       <ExpenseList expenses={expenses} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 24,
+    paddingHorizontal: 24,
+
+    backgroundColor: GlobalTheme.colors.primary400,
+  },
+});
 
 export default ExpensesOutput;
