@@ -9,6 +9,7 @@ import {GlobalTheme} from './constants/theme';
 import AllExpenses from './pages/AllExpenses';
 import EditExpense from './pages/EditExpense';
 import RecentExpenses from './pages/RecentExpenses';
+import {PremadeIcon} from './widgets/IconButton';
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,11 +18,12 @@ const BottomTabsComponent = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: GlobalTheme.colors.primary800},
+        headerStyle: {backgroundColor: GlobalTheme.colors.primary400},
         headerTintColor: colours.white,
-        tabBarStyle: {backgroundColor: GlobalTheme.colors.primary800},
+        tabBarStyle: {backgroundColor: GlobalTheme.colors.primary400},
         tabBarActiveTintColor: colours.white,
-        tabBarInactiveTintColor: GlobalTheme.colors.primary400,
+        tabBarInactiveTintColor: GlobalTheme.colors.primary800,
+        headerRight: ({tintColor}) => PremadeIcon('add', tintColor, () => {}),
       }}>
       <BottomTabs.Screen
         name="RecentExpenses"

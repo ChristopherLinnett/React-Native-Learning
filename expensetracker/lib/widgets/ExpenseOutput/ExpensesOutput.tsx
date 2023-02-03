@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingHorizontal: 24,
 
-    backgroundColor: GlobalTheme.colors.primary400,
+    backgroundColor: GlobalTheme.colors.primary800,
   },
 });
 
