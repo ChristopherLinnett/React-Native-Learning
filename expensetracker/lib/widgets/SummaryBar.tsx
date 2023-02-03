@@ -1,8 +1,21 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 
-const SummaryBar = () => {
-  return <View />;
+type SummaryBarProps = {
+  timePeriod: string;
+  expenses: {amount: number}[];
+};
+
+const SummaryBar = ({timePeriod, expenses}: SummaryBarProps) => {
+  const expensesSum = expenses.reduce((sum, expense) => {
+    return sum + expense.amount;
+  }, 0);
+  return (
+    <View>
+      <Text>{timePeriod}</Text>
+      <Text>${expensesSum.toFixed(2)}</Text>
+    </View>
+  );
 };
 
 export default SummaryBar;
