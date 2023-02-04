@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, NavigationProp} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StatusBar} from 'react-native';
@@ -10,20 +10,27 @@ import AllExpenses from './pages/AllExpenses';
 import EditExpense from './pages/EditExpense';
 import RecentExpenses from './pages/RecentExpenses';
 import {PremadeIcon} from './widgets/IconButton';
+import {RootStackParamList, RootTabsParamList} from './constants/routeparams';
+import ExpensesContextProvider from './store/expenses.context';
 
-const BottomTabs = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const BottomTabs = createBottomTabNavigator<RootTabsParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const BottomTabsComponent = () => {
   return (
     <BottomTabs.Navigator
-      screenOptions={{
-        headerStyle: {backgroundColor: GlobalTheme.colors.primary400},
-        headerTintColor: colours.white,
-        tabBarStyle: {backgroundColor: GlobalTheme.colors.primary400},
-        tabBarActiveTintColor: colours.white,
-        tabBarInactiveTintColor: GlobalTheme.colors.primary800,
-        headerRight: ({tintColor}) => PremadeIcon('add', tintColor, () => {}),
+      screenOptions={({navigation}: {navigation: NavigationProp<any, any>}) => {
+        return {
+          headerStyle: {backgroundColor: GlobalTheme.colors.primary400},
+          headerTintColor: colours.white,
+          tabBarStyle: {backgroundColor: GlobalTheme.colors.primary400},
+          tabBarActiveTintColor: colours.white,
+          tabBarInactiveTintColor: GlobalTheme.colors.primary800,
+          headerRight: ({tintColor}) =>
+            PremadeIcon('add', tintColor, () =>
+              navigation.navigate('EditExpense', undefined),
+            ),
+        };
       }}>
       <BottomTabs.Screen
         name="RecentExpenses"
@@ -51,16 +58,27 @@ function App(): JSX.Element {
   return (
     <>
       <StatusBar barStyle="default" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="BottomTabs"
-            component={BottomTabsComponent}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen name="EditExpense" component={EditExpense} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ExpensesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {backgroundColor: GlobalTheme.colors.primary400},
+              headerTintColor: colours.white,
+              contentStyle: {backgroundColor: GlobalTheme.colors.primary800},
+            }}>
+            <Stack.Screen
+              name="BottomTabs"
+              component={BottomTabsComponent}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="EditExpense"
+              component={EditExpense}
+              options={{presentation: 'modal'}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ExpensesContextProvider>
     </>
   );
 }
