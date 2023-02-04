@@ -57,7 +57,7 @@ const BottomTabsComponent = () => {
 function App(): JSX.Element {
   return (
     <>
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle="light-content" />
       <ExpensesContextProvider>
         <NavigationContainer>
           <Stack.Navigator

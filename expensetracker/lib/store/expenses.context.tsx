@@ -13,7 +13,7 @@ export const ExpensesContext = createContext<ExpenseContextProps>({
   expenses: [],
   addExpense: (expense: Expense) => {},
   updateExpense: (id: string, newExpense: Expense) => {},
-  deleteExpense: (id: string) => {},
+  deleteExpense: (id: string | undefined) => {},
 });
 
 const expensesReducer = (
@@ -25,10 +25,7 @@ const expensesReducer = (
 ) => {
   switch (action.type) {
     case 'ADD':
-      if (
-        action.payload?.id === undefined ||
-        action.payload?.expense === undefined
-      ) {
+      if (action.payload?.expense === undefined) {
         return state;
       }
       const expense = action.payload.expense;
@@ -56,13 +53,14 @@ const expensesReducer = (
       if (expenseItemsIndex < 0) {
         return state;
       }
-      state[expenseItemsIndex] = new Expense(
+      const newState = [...state];
+      newState[expenseItemsIndex] = new Expense(
         newExpense.id,
         newExpense.description,
         newExpense.amount,
         newExpense.date,
       );
-      return state;
+      return newState;
     case 'DELETE':
       if (action.payload.id === undefined) {
         return state;

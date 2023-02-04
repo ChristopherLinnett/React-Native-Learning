@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
 import {RootStackParamList} from '../constants/routeparams';
 import {GlobalTheme} from '../constants/theme';
+import Expense from '../models/expense';
 import {ExpensesContext} from '../store/expenses.context';
 import Button from '../widgets/Button';
 import IconButton from '../widgets/IconButton';
@@ -30,6 +31,19 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
     navigation.goBack();
   };
   const confirmHandler = () => {
+    isEditing
+      ? expensesCtx.updateExpense(
+          editingExpenseId,
+          new Expense(
+            editingExpenseId,
+            'updateTest',
+            Math.random() * 100,
+            new Date(),
+          ),
+        )
+      : expensesCtx.addExpense(
+          new Expense(null, 'test', Math.random() * 100, new Date()),
+        );
     navigation.goBack();
   };
   return (
