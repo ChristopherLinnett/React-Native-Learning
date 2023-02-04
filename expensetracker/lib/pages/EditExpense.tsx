@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {View} from 'react-native';
 import {RootStackParamList} from '../constants/routeparams';
 import {GlobalTheme} from '../constants/theme';
+import ExpenseForm from '../manageexpense/ExpenseForm';
 import Expense from '../models/expense';
 import {ExpensesContext} from '../store/expenses.context';
 import Button from '../widgets/Button';
@@ -48,6 +49,7 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
   };
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttonContainer}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
