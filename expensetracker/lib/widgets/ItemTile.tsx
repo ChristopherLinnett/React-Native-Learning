@@ -1,13 +1,29 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {RootStackParamList} from '../constants/routeparams';
 import {GlobalTheme} from '../constants/theme';
 import Expense from '../models/expense';
 
 type ItemTileProps = {item: Expense};
 
-const ItemTile = (itemData: ItemTileProps) => {
+export const ItemTileBuilder = (itemData: ItemTileProps) => {
+  return <ItemTile itemData={itemData} />;
+};
+
+const ItemTile = ({itemData}: {itemData: ItemTileProps}) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const itemPressHandler = () => {
+    itemData.item.id != null
+      ? navigation.navigate('EditExpense', {expenseID: itemData.item.id})
+      : navigation.navigate('EditExpense', undefined);
+  };
+
   return (
-    <Pressable>
+    <Pressable
+      onPress={itemPressHandler}
+      style={({pressed}) => pressed && styles.pressed}
+      android_ripple={{color: 'white'}}>
       <View style={styles.expenseItem}>
         <View style={styles.widthConstrain}>
           <Text style={[styles.textBase, styles.description]}>
@@ -26,6 +42,9 @@ const ItemTile = (itemData: ItemTileProps) => {
 };
 
 const styles = StyleSheet.create({
+  pressed: {
+    opacity: 0.5,
+  },
   expenseItem: {
     padding: 12,
     marginVertical: 8,
