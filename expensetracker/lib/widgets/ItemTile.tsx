@@ -22,7 +22,7 @@ const ItemTile = ({itemData}: {itemData: ItemTileProps}) => {
   return (
     <Pressable
       onPress={itemPressHandler}
-      style={({pressed}) => pressed && styles.pressed}
+      style={({pressed}) => [styles.expenseOutline, pressed && styles.pressed]}
       android_ripple={{color: 'white'}}>
       <View style={styles.expenseItem}>
         <View style={styles.widthConstrain}>
@@ -44,25 +44,28 @@ const ItemTile = ({itemData}: {itemData: ItemTileProps}) => {
 const styles = StyleSheet.create({
   pressed: {
     opacity: 0.5,
+    overflow: 'hidden',
   },
-  expenseItem: {
+  expenseOutline: {
     padding: 12,
     marginVertical: 8,
     backgroundColor: GlobalTheme.colors.primary500,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     borderRadius: 6,
-    elevation: 4,
+    elevation: 8,
     shadowColor: GlobalTheme.colors.accent500,
     shadowRadius: 4,
     shadowOffset: {width: 1, height: 1},
     shadowOpacity: 0.4,
   },
+  expenseItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   textBase: {
     color: GlobalTheme.colors.primary50,
   },
   widthConstrain: {
-    maxWidth: '80%',
+    maxWidth: '60%',
   },
   description: {
     fontSize: 16,

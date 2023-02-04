@@ -12,6 +12,7 @@ const Button = ({children, onPress, mode, style}: ButtonProps) => {
   return (
     <View style={[style ? style : null]}>
       <Pressable
+        android_ripple={{color: GlobalTheme.colors.primary100}}
         style={({pressed}) => pressed && styles.pressed}
         onPress={() => {
           if (onPress === undefined) {

@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 24,
-    paddingHorizontal: 24,
-
+    paddingHorizontal: '5%',
     backgroundColor: GlobalTheme.colors.primary800,
   },
 });
