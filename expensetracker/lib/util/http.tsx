@@ -13,6 +13,20 @@ export const storeExpense = (expenseData: Expense) => {
   return axios.post(endpoint + 'expenses.json', uploadData);
 };
 
+export const updateExpense = (expense: Expense) => {
+  const id = expense.id;
+  const uploadData = {
+    amount: expense.amount,
+    date: expense.date.toISOString(),
+    description: expense.description,
+  };
+  return axios.put(endpoint + 'expenses/' + `${id}.json`, uploadData);
+};
+
+export const deleteExpense = (id: string) => {
+  return axios.delete(endpoint + 'expenses/' + `${id}.json`);
+};
+
 export const getExpenses = async () => {
   const response = await axios.get(endpoint + 'expenses.json');
   const expenseList: Expense[] = [];

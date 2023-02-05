@@ -7,7 +7,7 @@ import {GlobalTheme} from '../constants/theme';
 import ExpenseForm from '../manageexpense/ExpenseForm';
 import Expense from '../models/expense';
 import {ExpensesContext} from '../store/expenses.context';
-import {storeExpense} from '../util/http';
+import {deleteExpense, storeExpense, updateExpense} from '../util/http';
 import IconButton from '../widgets/IconButton';
 
 type EditExpenseProps = {
@@ -21,22 +21,30 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
   const currentExpense = expensesCtx.expenses.find(
     expense => expense.id === editingExpenseId,
   );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? 'Edit Expense' : 'Add Expense',
     });
   }, [isEditing, navigation]);
   if (isEditing && currentExpense === undefined) {
-    return;
   }
 
-  const deleteExpenseHandler = () => {
-    expensesCtx.deleteExpense(editingExpenseId);
-    navigation.goBack();
+  const deleteExpenseHandler = async () => {
+    const response = await deleteExpense(editingExpenseId!);
+    console.log(response.status);
+    if (response.status === 200) {
+      expensesCtx.deleteExpense(editingExpenseId);
+      navigation.goBack();
+    }
   };
   const confirmHandler = async (expense: Expense) => {
     if (isEditing) {
-      expensesCtx.updateExpense(editingExpenseId, expense);
+      const response = await updateExpense(expense);
+      if (response.status === 200) {
+        expensesCtx.updateExpense(editingExpenseId, expense);
+        navigation.goBack();
+      }
     } else {
       const result = await storeExpense(expense);
       expense.id = result.data.name;
