@@ -18,11 +18,17 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
   const editingExpenseId = route.params?.expenseID;
   const isEditing = !!editingExpenseId;
   const expensesCtx = useContext(ExpensesContext);
+  const currentExpense = expensesCtx.expenses.find(
+    expense => expense.id === editingExpenseId,
+  );
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? 'Edit Expense' : 'Add Expense',
     });
   }, [isEditing, navigation]);
+  if (isEditing && currentExpense === undefined) {
+    return;
+  }
 
   const deleteExpenseHandler = () => {
     expensesCtx.deleteExpense(editingExpenseId);
@@ -49,7 +55,7 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
   };
   return (
     <View style={styles.container}>
-      <ExpenseForm />
+      <ExpenseForm defaultData={isEditing ? currentExpense : null} />
       <View style={styles.buttonContainer}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
