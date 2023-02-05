@@ -5,6 +5,7 @@ import {View} from 'react-native';
 import {RootStackParamList} from '../constants/routeparams';
 import {GlobalTheme} from '../constants/theme';
 import ExpenseForm from '../manageexpense/ExpenseForm';
+import Expense from '../models/expense';
 import {ExpensesContext} from '../store/expenses.context';
 import IconButton from '../widgets/IconButton';
 
@@ -32,9 +33,18 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
     expensesCtx.deleteExpense(editingExpenseId);
     navigation.goBack();
   };
+  const confirmHandler = (expense: Expense) => {
+    isEditing
+      ? expensesCtx.updateExpense(editingExpenseId, expense)
+      : expensesCtx.addExpense(expense);
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
-      <ExpenseForm defaultData={isEditing ? currentExpense : null} />
+      <ExpenseForm
+        defaultData={isEditing ? currentExpense : null}
+        onSubmit={confirmHandler}
+      />
       {isEditing && (
         <View style={styles.deleteButtonContainer}>
           <IconButton
