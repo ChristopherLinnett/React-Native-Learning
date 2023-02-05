@@ -1,9 +1,20 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {ExpensesContext} from '../store/expenses.context';
 import getDateMinusDays from '../util/date';
+import {getExpenses} from '../util/http';
 import ExpensesOutput from '../widgets/ExpenseOutput/ExpensesOutput';
 
 const RecentExpenses = () => {
+  useEffect(() => {
+    if (expensesContext.expenses.length === 0) {
+      getExpenses().then(expenseArray => {
+        expenseArray.forEach(expense => {
+          expensesContext.addExpense(expense);
+        });
+      });
+    }
+  });
+
   const expensesContext = useContext(ExpensesContext);
   const recentExpenses = expensesContext.expenses.filter(expense => {
     const today = new Date();

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {createContext, ReactNode, useReducer} from 'react';
 import Expense from '../models/expense';
-import DUMMY_EXPENSES from '../constants/DummyData';
 type ExpenseContextProps = {
   expenses: Expense[];
   addExpense: Function;
@@ -29,15 +28,7 @@ const expensesReducer = (
         return state;
       }
       const expense = action.payload.expense;
-      return [
-        new Expense(
-          Math.random().toString(),
-          expense.description,
-          expense.amount,
-          expense.date,
-        ),
-        ...state,
-      ];
+      return [expense, ...state];
 
     case 'UPDATE':
       if (
@@ -71,11 +62,7 @@ const expensesReducer = (
   }
 };
 const ExpensesContextProvider = ({children}: {children: ReactNode}) => {
-  const [expensesState, dispatch] = useReducer(
-    expensesReducer,
-    DUMMY_EXPENSES,
-    undefined,
-  );
+  const [expensesState, dispatch] = useReducer(expensesReducer, [], undefined);
 
   const addExpense = (expense: Expense) =>
     dispatch({type: 'ADD', payload: {expense: expense}});

@@ -40,6 +40,7 @@ const ExpenseForm = ({defaultData, onSubmit}: ExpenseFormProps) => {
   };
 
   const cancelHandler = () => {
+    console.log(defaultData?.id);
     navigation.goBack();
   };
 

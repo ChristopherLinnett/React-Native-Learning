@@ -7,6 +7,7 @@ import {GlobalTheme} from '../constants/theme';
 import ExpenseForm from '../manageexpense/ExpenseForm';
 import Expense from '../models/expense';
 import {ExpensesContext} from '../store/expenses.context';
+import {storeExpense} from '../util/http';
 import IconButton from '../widgets/IconButton';
 
 type EditExpenseProps = {
@@ -33,11 +34,15 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
     expensesCtx.deleteExpense(editingExpenseId);
     navigation.goBack();
   };
-  const confirmHandler = (expense: Expense) => {
-    isEditing
-      ? expensesCtx.updateExpense(editingExpenseId, expense)
-      : expensesCtx.addExpense(expense);
-    navigation.goBack();
+  const confirmHandler = async (expense: Expense) => {
+    if (isEditing) {
+      expensesCtx.updateExpense(editingExpenseId, expense);
+    } else {
+      const result = await storeExpense(expense);
+      expense.id = result.data.name;
+      expensesCtx.addExpense(expense);
+      navigation.goBack();
+    }
   };
   return (
     <View style={styles.container}>
