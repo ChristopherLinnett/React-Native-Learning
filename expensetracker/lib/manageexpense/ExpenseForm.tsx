@@ -112,19 +112,17 @@ const ExpenseForm = ({defaultData, onSubmit}: ExpenseFormProps) => {
           }}
         />
       </View>
-      {formIsInvalid && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>
-            Please Correct Your{' '}
-            {!input.amount.isValid
-              ? 'Amount'
-              : !input.date.isValid
-              ? 'Date'
-              : 'Description'}{' '}
-            Field
-          </Text>
-        </View>
-      )}
+      <View style={[styles.errorContainer, formIsInvalid && styles.visible]}>
+        <Text style={styles.errorText}>
+          Please Correct Your{' '}
+          {!input.amount.isValid
+            ? 'Amount'
+            : !input.date.isValid
+            ? 'Date'
+            : 'Description'}{' '}
+          Field
+        </Text>
+      </View>
       <View style={styles.buttonContainer}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
@@ -140,11 +138,14 @@ const styles = StyleSheet.create({
   formStyle: {
     marginTop: 40,
   },
+  visible: {
+    opacity: 1,
+  },
   errorContainer: {
     alignSelf: 'center',
     backgroundColor: GlobalTheme.colors.primary700,
     margin: 10,
-    opacity: 0.75,
+    opacity: 0.0,
     borderRadius: 10,
   },
   errorText: {
