@@ -1,6 +1,6 @@
 import {NavigationProp, RouteProp} from '@react-navigation/native';
-import React, {useContext, useLayoutEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useContext, useLayoutEffect, useState} from 'react';
+import {Alert, StyleSheet} from 'react-native';
 import {View} from 'react-native';
 import {RootStackParamList} from '../constants/routeparams';
 import {GlobalTheme} from '../constants/theme';
@@ -9,12 +9,14 @@ import Expense from '../models/expense';
 import {ExpensesContext} from '../store/expenses.context';
 import {deleteExpense, storeExpense, updateExpense} from '../util/http';
 import IconButton from '../widgets/IconButton';
+import LoadingOverlay from '../widgets/LoadingOvelay';
 
 type EditExpenseProps = {
   route: RouteProp<RootStackParamList, 'EditExpense'>;
   navigation: NavigationProp<RootStackParamList>;
 };
 const EditExpense = ({route, navigation}: EditExpenseProps) => {
+  const [isLoading, setLoading] = useState(false);
   const editingExpenseId = route.params?.expenseID;
   const isEditing = !!editingExpenseId;
   const expensesCtx = useContext(ExpensesContext);
@@ -31,45 +33,57 @@ const EditExpense = ({route, navigation}: EditExpenseProps) => {
   }
 
   const deleteExpenseHandler = async () => {
+    setLoading(true);
     const response = await deleteExpense(editingExpenseId!);
-    console.log(response.status);
+    setLoading(false);
     if (response.status === 200) {
       expensesCtx.deleteExpense(editingExpenseId);
       navigation.goBack();
     }
   };
   const confirmHandler = async (expense: Expense) => {
+    setLoading(true);
     if (isEditing) {
-      const response = await updateExpense(expense);
-      if (response.status === 200) {
-        expensesCtx.updateExpense(editingExpenseId, expense);
-        navigation.goBack();
+      if (!expense.isEqualTo(currentExpense ?? expense)) {
+        const response = await updateExpense(expense);
+        if (response.status === 200) {
+          expensesCtx.updateExpense(editingExpenseId, expense);
+          navigation.goBack();
+        }
+      } else {
+        Alert.alert('No Changes Made');
+        setLoading(false);
       }
     } else {
       const result = await storeExpense(expense);
+
       expense.id = result.data.name;
       expensesCtx.addExpense(expense);
       navigation.goBack();
     }
   };
-  return (
-    <View style={styles.container}>
-      <ExpenseForm
-        defaultData={isEditing ? currentExpense : null}
-        onSubmit={confirmHandler}
-      />
-      {isEditing && (
-        <View style={styles.deleteButtonContainer}>
-          <IconButton
-            name="trash"
-            color={GlobalTheme.colors.error50}
-            size={36}
-            onPress={deleteExpenseHandler}
-          />
-        </View>
-      )}
-    </View>
-  );
+  if (isLoading) {
+    return <LoadingOverlay />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <ExpenseForm
+          defaultData={isEditing ? currentExpense : null}
+          onSubmit={confirmHandler}
+        />
+        {isEditing && (
+          <View style={styles.deleteButtonContainer}>
+            <IconButton
+              name="trash"
+              color={GlobalTheme.colors.error50}
+              size={36}
+              onPress={deleteExpenseHandler}
+            />
+          </View>
+        )}
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

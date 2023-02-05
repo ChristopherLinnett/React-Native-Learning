@@ -14,5 +14,15 @@ class Expense {
     this.amount = amount;
     this.date = date;
   }
+  isEqualTo(expense: Expense) {
+    const equalValues =
+      this.id !== expense.id ||
+      this.description !== expense.description ||
+      this.amount !== expense.amount ||
+      this.date.toISOString() !== expense.date.toISOString();
+    console.log(equalValues);
+    console.log(!equalValues);
+    return !equalValues;
+  }
 }
 export default Expense;

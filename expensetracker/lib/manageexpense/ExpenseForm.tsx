@@ -1,6 +1,6 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Keyboard, StyleSheet, Text, View} from 'react-native';
 import {RootStackParamList} from '../constants/routeparams';
 import {GlobalTheme} from '../constants/theme';
 import Expense from '../models/expense';
@@ -77,7 +77,7 @@ const ExpenseForm = ({defaultData, onSubmit}: ExpenseFormProps) => {
 
   return (
     <>
-      <View style={styles.formStyle}>
+      <View>
         <Text style={styles.title}>Your Expense</Text>
         <View style={styles.inputRow}>
           <Input
@@ -108,6 +108,12 @@ const ExpenseForm = ({defaultData, onSubmit}: ExpenseFormProps) => {
           label="description"
           textInputConfig={{
             multiline: true,
+            keyboardType: 'default',
+            onKeyPress: key => {
+              if (key.nativeEvent.key === 'Enter') {
+                Keyboard.dismiss();
+              }
+            },
             onChangeText: inputChangedHandler.bind(this, 'description'),
             value: input.description.value,
           }}
@@ -137,7 +143,7 @@ const ExpenseForm = ({defaultData, onSubmit}: ExpenseFormProps) => {
 };
 const styles = StyleSheet.create({
   formStyle: {
-    marginTop: 40,
+    marginTop: '15%',
   },
   visible: {
     opacity: 1,
