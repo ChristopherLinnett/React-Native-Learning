@@ -69,7 +69,7 @@ function App(): JSX.Element {
             <Stack.Screen
               name="BottomTabs"
               component={BottomTabsComponent}
-              options={{headerShown: false}}
+              options={{headerShown: true}}
             />
             <Stack.Screen
               name="EditExpense"
